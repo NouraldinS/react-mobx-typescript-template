@@ -1,0 +1,1 @@
+export type serviceFetch = (<ParamsType, BodyType>(params: ParamsType, body: BodyType) => Promise<any>)
