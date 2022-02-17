@@ -1,6 +1,6 @@
-export type FetchRequest<ParamsType, BodyType> = (params?: ParamsType, body?: BodyType) => Promise<any>;
+export type FetchRequest<ParamsType, BodyType, ErrorType = never> = (params?: ParamsType, body?: BodyType) => Promise<any | ErrorType>;
 
-export type ServiceCall<ParamsType, BodyType> = (
-  fetchQuery: FetchRequest<ParamsType, BodyType>, 
+export type ServiceCall<ParamsType, BodyType, ErrorType = never> = (
+  fetchQuery: FetchRequest<ParamsType, BodyType, ErrorType>, 
   { params, body }: { params?: ParamsType, body?: BodyType }
-) => Promise<any>;
+) => Promise<any> | ErrorType;

@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 import { fetchQuery } from '../environment';
 import { serviceFetch } from '../services';
-import { ServiceCall } from '../utils/globalTypes.types';
+import { FetchRequest, ServiceCall } from '../utils/globalTypes.types';
 
 class BasicStore {
   data = null;
@@ -11,7 +11,12 @@ class BasicStore {
   }
 
   // The <never, any> should be the types of params and body respectively, optimally from API.ts file
-  fetchData: ServiceCall<never, any> = (fetchQuery, {params, body}) => {
+  fetchData
+    <ParamsType, BodyType, ErrorType = never>
+    (
+      fetchQuery: FetchRequest<ParamsType, BodyType, ErrorType>,
+      { params, body }: { params?: ParamsType, body?: BodyType }
+  ): Promise<any | ErrorType> {
     return fetchQuery(params, body)
       .then(data => {
         this.data = data;
